@@ -1,10 +1,11 @@
+HOST: https://api.dolzer.com/v1
 # {{ .Name }}
 
 ## General notes
 
 {{ .Description }}
 
-{{ with $structures := .Structures }}
+<!-- {{ with $structures := .Structures }}
 
 ## API structures
 
@@ -26,12 +27,12 @@
 
 {{ end }}
 
-{{ end }}
+{{ end }} -->
 
 ## API Details
 
 {{ range .Folders }}
-### {{ .Name }}
+## {{ .Name }}
 
 {{ .Description }}
 
@@ -39,33 +40,32 @@
 
 {{ with $req := findRequest $.Requests . }}
 
-### {{ $req.Name }}
-
+### {{ $req.Name }} [{{ $req.Method }}]
 {{ $req.Description }}
++ Request
 
-#### Request
+    + Headers
 
-<table>
-    <tr><th>Method</th><td>{{ .Method }}</td></tr>
-    <tr><th>URL</th><td>{{ .URL }}</td></tr>
-</table>
+            {{ $req.Headers }}
 
-{{ with $res := findResponse $req "default" }}
+    + Body
 
-#### Response
+            {{ $req.RawModeData }}
 
-<table>
-    <tr><th>Code</th><td>{{ $res.ResponseCode.Code }}</td></tr>
-    <tr><th>Status</th><td>{{ $res.ResponseCode.Name }}</td></tr>
-</table>
+{{ with $req.Responses }}{{ range $index, $res := . }}
++ Response {{ $res.ResponseCode.Code }}
+    + Headers
+{{ range $res.Headers }}
+              {{ .Key }}: {{ .Value }}{{ end }}
+
+    + Body
 
 {{ with $example := $res.Text }}
-**Example** :
-
-```
-{{ indentJSON $example }}
-```
+          {{ $example }}
 {{ end }}
+{{ end }}
+
+
 
 {{ end }}
 
