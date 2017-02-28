@@ -1,7 +1,10 @@
 # postmanerator template for API blueprint
 
-## install
+## Installation
+
+this template requires https://github.com/aubm/postmanerator to be installed.
 
 ```
-postmanerator -local-name="markdown" themes get https://github.com/weluse/blueprint.git
+postmanerator -local-name="blueprint" themes get https://github.com/weluse/blueprint.git
+postmanerator themes get https://github.com/weluse/blueprint.git
 ```
